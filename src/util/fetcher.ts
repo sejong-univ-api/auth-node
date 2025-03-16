@@ -1,4 +1,4 @@
-import ConnectionError from '../error/connection-error';
+import ConnectionError from 'error/connection-error';
 
 const _createRequestBody = (data: FetcherRequestBody, isFormEncoded: boolean): string =>
      isFormEncoded ? new URLSearchParams(data).toString() : JSON.stringify(data);

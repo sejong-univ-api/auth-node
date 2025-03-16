@@ -1,9 +1,9 @@
-import { LOGIN_ENDPOINT } from '../constant/endpoint';
-import fetcher, { FetcherCookies, FetcherText } from '../util/fetcher';
-import { LOGIN_REQUEST_HEADER } from '../constant/login-header';
-import ConnectionError from '../error/connection-error';
-import InvalidCredentialError from '../error/invalid-credential-error';
-import AuthToken from '../model/AuthToken';
+import fetcher, { FetcherCookies, FetcherText } from 'util/fetcher';
+import { LOGIN_ENDPOINT } from 'constant/endpoint';
+import { LOGIN_REQUEST_HEADER } from 'constant/login-header';
+import ConnectionError from 'error/connection-error';
+import InvalidCredentialError from 'error/invalid-credential-error';
+import AuthToken from 'model/AuthToken';
 
 export default class AuthService {
      public async login(
@@ -62,6 +62,5 @@ export default class AuthService {
 
           const loginResult = match[1];
           return loginResult === SUCCESS;
-
      }
 }
