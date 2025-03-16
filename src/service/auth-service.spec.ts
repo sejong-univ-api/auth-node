@@ -1,7 +1,7 @@
-import AuthService from '../service/auth-service';
-import fetcher from '../util/fetcher';
-import ConnectionError from '../error/connection-error';
-import InvalidCredentialError from '../error/invalid-credential-error';
+import AuthService from 'service/auth-service';
+import fetcher from 'util/fetcher';
+import ConnectionError from 'error/connection-error';
+import InvalidCredentialError from 'error/invalid-credential-error';
 
 jest.mock('../util/fetcher', () => ({
      post: jest.fn(),
