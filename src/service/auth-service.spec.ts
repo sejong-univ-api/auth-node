@@ -19,7 +19,7 @@ describe('AuthService', () => {
           // Given
           const fakeResponse = {
                body: "<script>var result = 'OK';</script>",
-               cookies: { JSESSIONID: 'dummyJS', SSOTOKEN: 'dummySSO' },
+               cookies: { JSESSIONID: 'dummyJS', ssotoken: 'dummySSO' },
           };
           (fetcher.post as jest.Mock).mockResolvedValue(fakeResponse);
 
