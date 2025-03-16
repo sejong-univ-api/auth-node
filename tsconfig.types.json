@@ -1,13 +1,11 @@
 {
      "extends": "./tsconfig.json",
      "compilerOptions": {
-          "module": "ES2020",
-          "moduleResolution": "bundler",
+          "outDir": "dist/types",
           "declaration": true,
           "emitDeclarationOnly": true,
-          "outDir": "dist/types",
+          "noEmit": false,
           "stripInternal": true
      },
-     "include": ["src/**/*.ts"],
-     "exclude": ["node_modules", "dist", "**/*.spec.ts"]
+     "include": ["src/**/*.ts"]
 }

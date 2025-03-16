@@ -1,11 +1,12 @@
 const path = require('path');
 
-const typescript = require('rollup-plugin-typescript2');
+const typescript = require('@rollup/plugin-typescript');
 const resolve = require('@rollup/plugin-node-resolve');
 const commonjs = require('@rollup/plugin-commonjs');
 const alias = require('@rollup/plugin-alias');
-const json = require('@rollup/plugin-json'); // JSON 플러그인 추가
-const { terser } = require('rollup-plugin-terser');
+const json = require('@rollup/plugin-json');
+const terser = require('@rollup/plugin-terser');
+const { dts } = require('rollup-plugin-dts'); // 타입 빌드 플러그인 추가
 
 const projectRoot = path.resolve(__dirname, 'src');
 
@@ -26,7 +27,8 @@ module.exports = [
                     strict: false,
                },
           ],
-          context: 'this', // 최상위 this 문제
+          external: ['tslib'],
+          context: 'this',
           plugins: [
                alias({
                     entries: [
@@ -43,14 +45,36 @@ module.exports = [
                }),
                resolve({ extensions: ['.ts', '.js'] }),
                commonjs({
-                    ignoreTryCatch: false, // 일부 패키지에서 try-catch 최적화 방지
+                    ignoreTryCatch: false,
                }),
-               json(), // JSON 플러그인 추가
+               json(),
                typescript({
-                    tsconfig: 'tsconfig.json',
-                    clean: true,
+                    compilerOptions: {
+                         lib: ['es2020', 'dom'],
+                         target: 'es2020',
+                    },
                }),
-               terser(),
+          ],
+     },
+     // 타입 선언 파일 빌드 추가
+     {
+          input: 'src/index.ts',
+          output: [{ file: 'dist/types/index.d.ts', format: 'es' }],
+          plugins: [
+               alias({
+                    entries: [
+                         { find: 'service', replacement: path.resolve(projectRoot, 'service') },
+                         {
+                              find: 'controller',
+                              replacement: path.resolve(projectRoot, 'controller'),
+                         },
+                         { find: 'model', replacement: path.resolve(projectRoot, 'model') },
+                         { find: 'util', replacement: path.resolve(projectRoot, 'util') },
+                         { find: 'constant', replacement: path.resolve(projectRoot, 'constant') },
+                         { find: 'error', replacement: path.resolve(projectRoot, 'error') },
+                    ],
+               }),
+               dts(),
           ],
      },
 ];

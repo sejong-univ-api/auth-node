@@ -16,11 +16,9 @@ export async function getProfile(username: string, password: string): Promise<Pr
      return await profileController.getProfile(username, password);
 }
 
-const sejongUnivAuth = {
+export const sejongUnivAuth = {
      login,
      getProfile,
 };
 
 export default sejongUnivAuth;
-
-getProfile('21013216', 'kk3055016*');

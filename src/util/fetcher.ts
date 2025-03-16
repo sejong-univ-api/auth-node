@@ -20,7 +20,8 @@ const _parseResponse = async (response: Response): Promise<FetcherResponse> => {
 };
 
 const _parseHeaders = (response: Response): FetcherHeaders =>
-     Object.fromEntries(response.headers.entries());
+    Object.fromEntries(Array.from((response.headers as any).entries()));
+
 
 const _parseCookies = (response: Response): FetcherCookies => {
      const cookiesHeader = response.headers.get('Set-Cookie');
