@@ -29,7 +29,7 @@ SejongUnivAuth는 세종대학교 통합인증 시스템을 위해 개발된 라
 npm을 통해 라이브러리를 설치하여 사용하는 것이 권장됩니다.
 
 ```shell
-npm i sejong-univ-auth
+npm i @sejong-univ-auth/auth
 ```
 
 ## 주요 기능
@@ -147,7 +147,8 @@ try {
 ### CJS
 
 ```js
-const sejongUnivAuth = require('sejong-univ-auth').default;
+const sejongUnivAuth = require('@sejong-univ-auth/auth').default;
+// const { login, getProfile } = require('@sejong-univ-auth/auth')
 
 async function getUserProfile(username, password) {
      try {
@@ -171,7 +172,7 @@ async function getUserProfile(username, password) {
 ### ESM
 
 ```js
-import sejongUnivAuth from 'sejong-univ-auth';
+import sejongUnivAuth from '@sejong-univ-auth/auth';
 
 async function getUserProfile(username, password) {
      try {
