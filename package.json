@@ -1,6 +1,6 @@
 {
      "name": "@sejong-univ-api/auth",
-     "version": "0.0.1",
+     "version": "0.0.2",
      "description": "세종대학교 SSO을 통한 학생인증를 하는 라이브러리",
      "main": "dist/cjs/index.js",
      "module": "dist/esm/index.js",
