@@ -22,7 +22,7 @@ export default class AuthService {
 
           return {
                success: true,
-               token: AuthToken.of(cookies['JSESSIONID'], cookies['SSOTOKEN']),
+               token: AuthToken.of(cookies['JSESSIONID'], cookies['ssotoken']),
           };
      }
 
@@ -61,9 +61,7 @@ export default class AuthService {
           }
 
           const loginResult = match[1];
-          if (loginResult === SUCCESS) {
-               return true;
-          }
-          return false;
+          return loginResult === SUCCESS;
+
      }
 }

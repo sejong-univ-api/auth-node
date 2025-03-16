@@ -68,12 +68,23 @@ const _postRequest = async (
      return await _parseResponse(response);
 };
 
+const joinCookies = (cookies: FetcherCookies): string => {
+     return Object.entries(cookies)
+          .map(([key, value]) => `${key}=${value}`)
+          .join('; ');
+};
+
 const _getRequest = async (
      url: string,
      params: Record<string, string> = {},
-     headers: FetcherHeaders = {}
+     headers: FetcherHeaders = {},
+     cookies: FetcherCookies = {}
 ): Promise<FetcherResponse> => {
      const queryString = new URLSearchParams(params).toString();
+     const cookieString = joinCookies(cookies);
+     if (cookieString) {
+          headers['Cookie'] = cookieString;
+     }
      const response = await fetch(`${url}?${queryString}`, {
           method: 'GET',
           headers,
@@ -91,6 +102,7 @@ export type FetcherText = string;
 
 export type FetcherOptions = {
      headers?: FetcherHeaders;
+     cookies?: FetcherCookies;
 };
 export type FetcherPostOptions = FetcherOptions & {
      formUrlEncoded?: boolean;
@@ -129,7 +141,8 @@ const fetcher: Fetcher = Object.freeze({
           url: string,
           params: Record<string, string> = {},
           options: FetcherOptions = {}
-     ): Promise<FetcherResponse> => _getRequest(url, params, options.headers ?? {}),
+     ): Promise<FetcherResponse> =>
+          _getRequest(url, params, options.headers ?? {}, options.cookies ?? {}),
 });
 
 export default fetcher;
