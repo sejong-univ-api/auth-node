@@ -1,253 +1,209 @@
-# SejongAuthDelegator
+# SejongUnivAuth
 
-# 목차
+## 목차
 
 - [소개](#소개)
-- [사용가능한 메서드](#사용가능한-메서드)
-     - [getUserProfile](#getuserprofileloginrequestdto-loginrequestdto-promiseprofileresponsedto--null)
-     - [getAuthenticatedJsessionId](#getauthenticatedjsessionidloginrequestdto-loginrequestdto-promisestring--null)
-     - [isAuthenticatedUser](#isauthenticateduserloginrequestdto-loginrequestdto-promiseboolean)
-     - [createLoginRequestDto](#createloginrequestdtouserid-string-password-string-loginrequestdto)
-- [DTO 객체](#dto-객체)
-     - [LoginRequestDto](#loginrequestdto)
-     - [ProfileResponseDto](#profileresponsedto)
 - [설치방법](#설치방법)
+- [주요 기능](#주요-기능)
+  - [login](#loginusername-string-password-string-promiseloginresponse)
+  - [getProfile](#getprofileusername-string-password-string-promiseprofile)
+- [반환 객체](#반환-객체)
+  - [LoginResponse](#loginresponse)
+  - [Token](#token)
+  - [Profile](#profile)
+- [오류 처리](#오류-처리)
+  - [ConnectionError](#connectionerror)
+  - [InvalidCredentialError](#invalidcredentialerror)
 - [사용예시](#사용예시)
-     - [CJS](#cjs)
-     - [ESM](#esm)
+  - [CJS](#cjs)
+  - [ESM](#esm)
 - [이슈등록](#이슈등록)
-     - [패치내역](#패치내역)
+- [패치내역](#패치내역)
 
-# 소개
+## 소개
 
-SejongAuthDelegator는 세종대학교의 인증 시스템을 위해 개발된 라이브러리입니다. 사용자의 ID와 패스워드를 이용해 세종대학교 시스템에 로그인하고, 인증된 세션을 통해 사용자의 프로필 정보를 가져올 수 있습니다.
+SejongUnivAuth는 세종대학교 통합인증 시스템을 위해 개발된 라이브러리입니다. 사용자의 ID와 패스워드를 이용해 세종대학교 시스템에 로그인하고, 인증된 세션을 통해 사용자의 프로필 정보를 가져올 수 있습니다.
 
-# 사용가능한 메서드
+## 설치방법
 
-## 메서드
+npm을 통해 라이브러리를 설치하여 사용하는 것이 권장됩니다.
 
-### `getUserProfile(loginRequestDto: LoginRequestDto): Promise<ProfileResponseDto> | null`
+```shell
+npm i sejong-univ-auth
+```
 
-#### 설명
+## 주요 기능
 
-세종대학교 사용자 프로필 정보를 조회하여 반환합니다.
-
-#### 인자
-
-- `loginRequestDto`: `LoginRequestDto` 객체
-
-#### 반환값
-
-| 조건 | 반환 타입            | 설명                            |
-| ---- | -------------------- | ------------------------------- |
-| 성공 | `ProfileResponseDto` | 사용자 프로필 정보              |
-| 실패 | `null`               | 사용자 인증 실패 시 `null` 반환 |
-
----
-
-### `getAuthenticatedJsessionId(loginRequestDto: LoginRequestDto): Promise<string> | null`
+### `login(username: string, password: string): Promise<LoginResponse>`
 
 #### 설명
 
-사용자를 인증하고 세션 ID(`jsessionId`)를 반환합니다.
+세종대학교 통합인증 시스템을 통해 사용자 로그인을 수행합니다.
 
 #### 인자
 
-- `loginRequestDto`: `LoginRequestDto` 객체
+- `username`: 세종대학교 통합인증 ID
+- `password`: 세종대학교 통합인증 비밀번호
 
 #### 반환값
 
-| 조건 | 반환 타입 | 설명                                    |
-| ---- | --------- | --------------------------------------- |
-| 성공 | `string`  | 인증된 사용자의 세션 ID (유효기간 존재) |
-| 실패 | `null`    | 사용자 인증 실패 시 `null` 반환         |
+| 조건 | 반환 타입       | 설명                                                      |
+| ---- | --------------- | --------------------------------------------------------- |
+| 성공 | `LoginResponse` | 인증 성공 및 토큰 정보                                    |
+| 실패 | `InvalidCredentialError` | 로그인 정보(아이디/비밀번호)가 올바르지 않을 때  |
+| 실패 | `ConnectionError` | 네트워크 연결 문제 또는 서버 응답 형식 오류일 때        |
 
----
-
-### `isAuthenticatedUser(loginRequestDto: LoginRequestDto): Promise<boolean>`
+### `getProfile(username: string, password: string): Promise<Profile>`
 
 #### 설명
 
-사용자의 인증 가능 여부를 판단합니다.
+세종대학교 통합인증 시스템을 통해 로그인 후 사용자 프로필 정보를 조회합니다.
 
 #### 인자
 
-- `loginRequestDto`: `LoginRequestDto` 객체
+- `username`: 세종대학교 통합인증 ID
+- `password`: 세종대학교 통합인증 비밀번호
 
 #### 반환값
 
-| 조건 | 반환 타입 | 설명                        |
-| ---- | --------- | --------------------------- |
-| 성공 | `boolean` | 사용자 인증 성공 시 `true`  |
-| 실패 | `boolean` | 사용자 인증 실패 시 `false` |
+| 조건 | 반환 타입 | 설명                                                      |
+| ---- | --------- | --------------------------------------------------------- |
+| 성공 | `Profile` | 사용자 프로필 정보                                        |
+| 실패 | `InvalidCredentialError` | 로그인 정보(아이디/비밀번호)가 올바르지 않을 때  |
+| 실패 | `ConnectionError` | 네트워크 연결 문제 또는 서버 응답 형식 오류일 때        |
 
----
+## 반환 객체
 
-### `createLoginRequestDto(userId: string, password: string): LoginRequestDto`
+### LoginResponse
 
-#### 설명
+사용자 로그인 결과 정보를 담는 객체입니다.
 
-`userId`와 `password`를 받아서 `LoginRequestDto` 객체를 생성합니다.
+| 필드명  | 타입      | 설명                |
+| ------- | --------- | ------------------- |
+| success | boolean   | 로그인 성공 여부    |
+| token   | Token     | 인증 토큰 정보      |
 
-#### 인자
+### Token
 
-- `userId`: 사용자 ID
-- `password`: 사용자 비밀번호
+사용자 인증 토큰 정보를 담는 객체입니다.
 
-#### 반환값
+| 필드명     | 타입   | 설명                |
+| ---------- | ------ | ------------------- |
+| jsessionid | string | 세션 식별자         |
+| ssotoken   | string | SSO 토큰 정보       |
 
-- `LoginRequestDto`: 생성된 `LoginRequestDto` 객체
-
----
-
-## 객체
-
-### LoginRequestDto
-
-사용자 로그인 요청 정보를 담는 객체입니다.
-
-| 필드명   | 타입   | 설명                     |
-| -------- | ------ | ------------------------ |
-| userId   | string | sju 통합 로그인 ID       |
-| password | string | sju 통합 로그인 Password |
-
-### ProfileResponseDto
+### Profile
 
 사용자 프로필 정보를 담는 객체입니다.
 
-| 필드명             | 타입   | 설명             |
-| ------------------ | ------ | ---------------- |
-| major              | string | 전공             |
-| studentCode        | string | 학번             |
-| name               | string | 이름             |
-| gradeLevel         | number | 학년             |
-| userStatus         | string | 사용자 상태      |
-| completedSemesters | number | 이수한 학기 수   |
-| verifiedSemesters  | number | 인증받은 학기 수 |
+| 필드명                   | 타입   | 설명                |
+| ------------------------ | ------ | ------------------- |
+| major                    | string | 전공                |
+| studentCode              | string | 학번                |
+| name                     | string | 이름                |
+| grade                    | number | 학년                |
+| userStatus               | string | 사용자 상태         |
+| totalSemesters           | number | 이수 학기 수        |
+| readingVerifiedSemesters | number | 인증완료 학기 수    |
+| readingCertification     | string | 독서인증 여부       |
 
-# 설치방법
+## 오류 처리
 
-npm에 배포되어 있는 라이브러리를 install 하여 사용하는 것이 권장된다.
+이 라이브러리는 다음과 같은 오류 타입을 제공합니다.
 
-```shell
-npm i @coffee-tree/sejong-auth-delegator
-```
+### ConnectionError
 
-# 사용예시
-
-`cjs(commonjs)`와 `esm(module)` 방식 모두 지원된다.
-
-## CJS
-
-### Then 방식
+네트워크 연결 문제나 서버 응답 형식이 올바르지 않을 때 발생하는 오류입니다.
 
 ```js
-const { sejongAuthDelegator, LoginRequestDto } = require('@coffee-tree/sejong-auth-delegator');
-
-const login = (userId, password) => {
-     const delegator = sejongAuthDelegator();
-
-     const loginRequestDto = new LoginRequestDto(userId, password);
-
-     const profile = delegator
-          .getUserProfile(loginRequestDto)
-          .then((userProfile) => {
-               return userProfile;
-          })
-          .catch((error) => {
-               console.error('Error fetching user profile', error);
-               throw error;
-          });
-
-     return profile;
-};
+try {
+  await sejongUnivAuth.login(username, password);
+} catch (error) {
+  if (error.name === 'ConnectionError') {
+    console.error('서버 연결에 문제가 있습니다:', error.message);
+    console.error('상태 코드:', error.statusCode);
+  }
+}
 ```
 
-### Async/Await 방식
+### InvalidCredentialError
+
+사용자 인증 정보(아이디/비밀번호)가 올바르지 않을 때 발생하는 오류입니다.
 
 ```js
-const {
-    sejongAuthDelegator,
-    LoginRequestDto,
-} = require("@coffee-tree/sejong-auth-delegator");
-
-const login = (userId, password) => {
-    const delegator = sejongAuthDelegator();
-
-    const loginRequestDto = new LoginRequestDto(userId, password);
-
-    try {
-        const userProfile = await delegator.getUserProfile(loginRequestDto);
-        return userProfile;
-    } catch (error) {
-        console.error("Error fetching user profile", error);
-        throw error;
-    }
-};
+try {
+  await sejongUnivAuth.login(username, password);
+} catch (error) {
+  if (error.name === 'InvalidCredentialError') {
+    console.error('로그인에 실패했습니다:', error.message);
+  }
+}
 ```
 
-## ESM
+## 사용예시
 
-### Promise 방식
+`CJS(CommonJS)`와 `ESM(ES Modules)` 방식 모두 지원됩니다.
+
+### CJS
 
 ```js
-import {
-    sejongAuthDelegator,
-    LoginRequestDto,
-} from "@coffee-tree/sejong-auth-delegator";
+const sejongUnivAuth = require('sejong-univ-auth').default;
 
-const login = (userId, password) => {
-    const delegator = sejongAuthDelegator();
-
-    const loginRequestDto = new LoginRequestDto(userId, password);
-
-    const profile delegator
-        .getUserProfile(loginRequestDto)
-        .then((userProfile) => {
-            return userProfile;
-        })
-        .catch((error) => {
-            console.error("Error fetching user profile", error);
-            throw error;
-        });
-
+async function getUserProfile(username, password) {
+  try {
+    const profile = await sejongUnivAuth.getProfile(username, password);
+    console.log('사용자 정보:', profile);
     return profile;
-};
+  } catch (error) {
+    if (error.name === 'InvalidCredentialError') {
+      console.error('로그인 정보가 올바르지 않습니다:', error.message);
+    } else if (error.name === 'ConnectionError') {
+      console.error('서버 연결에 문제가 있습니다:', error.message);
+      console.error('상태 코드:', error.statusCode);
+    } else {
+      console.error('알 수 없는 오류 발생:', error);
+    }
+    throw error;
+  }
+}
 ```
 
-### Async/Await 방식
+### ESM
 
 ```js
-import {
-    sejongAuthDelegator,
-    LoginRequestDto,
-} from "@coffee-tree/sejong-auth-delegator";
+import sejongUnivAuth from 'sejong-univ-auth';
 
-const login = (userId, password) => {
-    const delegator = sejongAuthDelegator();
-
-    const loginRequestDto = new LoginRequestDto(userId, password);
-
-    try {
-        const profile = await delegator.getUserProfile(loginRequestDto);
-        return profile;
-    } catch (error) {
-        console.error("Error fetching user profile", error);
-        throw error;
+async function getUserProfile(username, password) {
+  try {
+    const profile = await sejongUnivAuth.getProfile(username, password);
+    console.log('사용자 정보:', profile);
+    return profile;
+  } catch (error) {
+    if (error.name === 'InvalidCredentialError') {
+      console.error('로그인 정보가 올바르지 않습니다:', error.message);
+    } else if (error.name === 'ConnectionError') {
+      console.error('서버 연결에 문제가 있습니다:', error.message);
+      console.error('상태 코드:', error.statusCode);
+    } else {
+      console.error('알 수 없는 오류 발생:', error);
     }
-};
+    throw error;
+  }
+}
 ```
 
-# 이슈등록
+## 이슈등록
 
-코드에 오류 및 개선사항이 있을 경우 해당 저정소에 이슈를 남겨주시면 감사합니다  
-[`sejong-auth-delegator-github`](https://github.com/Jeong-Rae/sejong-auth-delegator/issues)
+코드에 오류 및 개선사항이 있을 경우 해당 저장소에 이슈를 남겨주시면 감사하겠습니다.  
+[`sejong-univ-auth GitHub`](https://github.com/username/sejong-univ-auth/issues)
 
-# 패치내역
+## 패치내역
 
 ### 2024-05-23
+- 최초 기능 릴리즈
 
-- 로그인 성공 판단 기준을 변경하였습니다
-- TEST 검증 코드를 추가하였습니다.
-- `LoginRequestDTO` 클래스를 직접 반환받아 사용할 수 있게 하였습니다.
-- README 예시 코드를 변경하였습니다.
+### 2025-03-17
+- 변경된 학사 api 반영
+- 메서드 호출 방식 변경
+- ConnectionError와 InvalidCredentialError 오류 처리 구현
+- CJS/ESM 방식 모두 지원

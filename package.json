@@ -4,10 +4,16 @@
      "description": "세종대학교 SSO을 통한 학생인증를 하는 라이브러리",
      "main": "dist/cjs/index.js",
      "module": "dist/esm/index.js",
+     "types": "dist/types/index.d.ts",
      "exports": {
           "import": "./dist/esm/index.js",
           "require": "./dist/cjs/index.cjs"
      },
+     "files": [
+          "dist/cjs/",
+          "dist/esm/",
+          "dist/types/"
+     ],
      "scripts": {
           "lint": "prettier --check . && eslint . --ext .js,.ts",
           "lint:fix": "prettier --write . && eslint . --ext .js,.ts --fix",
@@ -17,8 +23,9 @@
           "build:cjs": "tsc -p tsconfig.cjs.json",
           "build:esm": "tsc -p tsconfig.esm.json",
           "build:types": "tsc --emitDeclarationOnly --project tsconfig.types.json",
-          "build": "npm run lint && npm run clean && npm run build:cjs && npm run build:esm && npm run build:types",
-          "clean-build": "npm run build",
+          "build": "npm run lint && npm run build:cjs && npm run build:esm && npm run build:types",
+          "prepublishOnly": "npm run build",
+          "clean-build": "npm run clean && npm run build",
           "test": "jest"
      },
      "keywords": [
@@ -27,6 +34,9 @@
           "sso",
           "auth"
      ],
+     "publishConfig": {
+          "access": "public"
+     },
      "author": "Jeong-Rae",
      "license": "ISC",
      "type": "module",
