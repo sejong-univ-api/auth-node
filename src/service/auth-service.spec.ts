@@ -1,7 +1,7 @@
-import AuthService from '../service/auth-service';
-import fetcher from '../util/fetcher';
-import ConnectionError from '../error/connection-error';
-import InvalidCredentialError from '../error/invalid-credential-error';
+import AuthService from 'service/auth-service';
+import fetcher from 'util/fetcher';
+import ConnectionError from 'error/connection-error';
+import InvalidCredentialError from 'error/invalid-credential-error';
 
 jest.mock('../util/fetcher', () => ({
      post: jest.fn(),
@@ -19,7 +19,7 @@ describe('AuthService', () => {
           // Given
           const fakeResponse = {
                body: "<script>var result = 'OK';</script>",
-               cookies: { JSESSIONID: 'dummyJS', SSOTOKEN: 'dummySSO' },
+               cookies: { JSESSIONID: 'dummyJS', ssotoken: 'dummySSO' },
           };
           (fetcher.post as jest.Mock).mockResolvedValue(fakeResponse);
 

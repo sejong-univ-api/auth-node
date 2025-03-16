@@ -1,8 +1,8 @@
-import ProfileService from '../service/profile-service';
-import fetcher from '../util/fetcher';
-import ConnectionError from '../error/connection-error';
-import AuthToken from '../model/AuthToken';
-import { PROFILE_ENDPOINT } from '../constant/endpoint';
+import ProfileService from 'service/profile-service';
+import fetcher from 'util/fetcher';
+import ConnectionError from 'error/connection-error';
+import AuthToken from 'model/AuthToken';
+import { PROFILE_ENDPOINT } from 'constant/endpoint';
 
 jest.mock('../util/fetcher', () => ({
      get: jest.fn(),

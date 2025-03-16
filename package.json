@@ -1,25 +1,40 @@
 {
-     "name": "@coffee-tree/sejong-auth-delegator",
-     "version": "0.0.1",
-     "description": "세종대학교 SSO을 통한 학생인증 대행을 수행하는 모듈",
+     "name": "@sejong-univ-api/auth",
+     "version": "0.0.2",
+     "description": "세종대학교 SSO을 통한 학생인증를 하는 라이브러리",
      "main": "dist/cjs/index.js",
      "module": "dist/esm/index.js",
+     "types": "dist/types/index.d.ts",
      "exports": {
-          "import": "./dist/esm/index.js",
-          "require": "./dist/cjs/index.cjs"
+          "import": {
+               "types": "./dist/types/index.d.ts",
+               "default": "./dist/esm/index.js"
+          },
+          "require": {
+               "types": "./dist/types/index.d.ts",
+               "default": "./dist/cjs/index.cjs"
+          },
+          "types": "./dist/types/index.d.ts"
      },
+     "files": [
+          "dist/cjs/",
+          "dist/esm/",
+          "dist/types/",
+          "package.json",
+          "README.md"
+     ],
      "scripts": {
-          "lint": "eslint . --ext .js,.ts",
-          "lint:fix": "eslint . --ext .js,.ts --fix",
+          "lint": "prettier --check . && eslint . --ext .js,.ts --ignore-pattern dist/",
+          "lint:fix": "prettier --write . && eslint . --ext .js,.ts --fix --ignore-pattern dist/",
           "format": "prettier --write .",
           "format:check": "prettier --check .",
-          "clean": "",
-          "build:cjs": "",
-          "build:esm": "",
-          "build:types": "",
-          "build": "npm run build:cjs && npm run build:esm",
-          "clean-build": "npm run clean && npm run build",
-          "test": ""
+          "clean": "rimraf dist",
+          "build:cjs": "tsc -p tsconfig.cjs.json",
+          "build:esm": "tsc -p tsconfig.esm.json",
+          "build:types": "tsc --emitDeclarationOnly --project tsconfig.types.json",
+          "build": "npm run clean && npx rollup -c rollup.config.cjs",
+          "prepublishOnly": "npm run build",
+          "test": "jest"
      },
      "keywords": [
           "sejong",
@@ -27,21 +42,36 @@
           "sso",
           "auth"
      ],
+     "publishConfig": {
+          "access": "public"
+     },
      "author": "Jeong-Rae",
      "license": "ISC",
      "type": "module",
      "devDependencies": {
           "@eslint/js": "^9.22.0",
+          "@rollup/plugin-alias": "^5.1.1",
+          "@rollup/plugin-commonjs": "^28.0.3",
+          "@rollup/plugin-json": "^6.1.0",
+          "@rollup/plugin-node-resolve": "^16.0.1",
+          "@rollup/plugin-terser": "^0.4.4",
+          "@rollup/plugin-typescript": "^12.1.2",
           "@types/jest": "^29.5.14",
+          "@typescript-eslint/eslint-plugin": "^8.26.1",
+          "@typescript-eslint/parser": "^8.26.1",
           "eslint": "^9.22.0",
           "eslint-config-prettier": "^10.1.1",
+          "eslint-import-resolver-typescript": "^3.9.1",
           "eslint-plugin-import": "^2.31.0",
           "eslint-plugin-node": "^11.1.0",
           "eslint-plugin-prettier": "^5.2.3",
           "eslint-plugin-promise": "^7.2.1",
           "jest": "^29.7.0",
           "prettier": "^3.5.3",
+          "rollup": "^4.35.0",
+          "rollup-plugin-dts": "^6.1.1",
           "ts-jest": "^29.2.6",
+          "tslib": "^2.8.1",
           "typescript": "^5.8.2"
      },
      "repository": {

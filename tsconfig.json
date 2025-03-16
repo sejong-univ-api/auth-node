@@ -1,13 +1,25 @@
 {
      "compilerOptions": {
-          "target": "es2019",
-          "module": "commonjs",
+          "target": "es2020",
+          "lib": ["es2020", "dom"],
+          "module": "ESNext",
+          "moduleResolution": "node",
           "outDir": "dist",
           "strict": true,
           "esModuleInterop": true,
           "skipLibCheck": true,
-          "forceConsistentCasingInFileNames": true
+          "forceConsistentCasingInFileNames": true,
+          "baseUrl": "./src",
+          "paths": {
+               "service/*": ["service/*"],
+               "controller/*": ["controller/*"],
+               "model/*": ["model/*"],
+               "util/*": ["util/*"],
+               "constant/*": ["constant/*"],
+               "error/*": ["error/*"]
+          },
+          "importHelpers": true
      },
-     "include": ["src"],
-     "exclude": ["node_modules", "**/*.test.ts"]
+     "include": ["src/**/*.ts"],
+     "exclude": ["node_modules", "**/*.spec.ts"]
 }

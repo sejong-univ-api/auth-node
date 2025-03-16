@@ -1,9 +1,10 @@
-import AuthToken from '../model/AuthToken';
-import fetcher from '../util/fetcher';
-import { PROFILE_ENDPOINT } from '../constant/endpoint';
-import Profile from '../model/Profile';
 import { load } from 'cheerio';
-import ConnectionError from '../error/connection-error';
+
+import fetcher from 'util/fetcher';
+import AuthToken from 'model/AuthToken';
+import { PROFILE_ENDPOINT } from 'constant/endpoint';
+import Profile from 'model/Profile';
+import ConnectionError from 'error/connection-error';
 
 export default class ProfileService {
      public async getProfile(authToken: AuthToken): Promise<Profile> {

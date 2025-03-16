@@ -1,5 +1,5 @@
-import ProfileService from '../service/profile-service';
-import AuthService from '../service/auth-service';
+import ProfileService from 'service/profile-service';
+import AuthService from 'service/auth-service';
 
 export interface Profile {
      major: string;

@@ -16,7 +16,7 @@ export async function getProfile(username: string, password: string): Promise<Pr
      return await profileController.getProfile(username, password);
 }
 
-const sejongUnivAuth = {
+export const sejongUnivAuth = {
      login,
      getProfile,
 };
