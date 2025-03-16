@@ -5,18 +5,18 @@
 - [소개](#소개)
 - [설치방법](#설치방법)
 - [주요 기능](#주요-기능)
-  - [login](#loginusername-string-password-string-promiseloginresponse)
-  - [getProfile](#getprofileusername-string-password-string-promiseprofile)
+     - [login](#loginusername-string-password-string-promiseloginresponse)
+     - [getProfile](#getprofileusername-string-password-string-promiseprofile)
 - [반환 객체](#반환-객체)
-  - [LoginResponse](#loginresponse)
-  - [Token](#token)
-  - [Profile](#profile)
+     - [LoginResponse](#loginresponse)
+     - [Token](#token)
+     - [Profile](#profile)
 - [오류 처리](#오류-처리)
-  - [ConnectionError](#connectionerror)
-  - [InvalidCredentialError](#invalidcredentialerror)
+     - [ConnectionError](#connectionerror)
+     - [InvalidCredentialError](#invalidcredentialerror)
 - [사용예시](#사용예시)
-  - [CJS](#cjs)
-  - [ESM](#esm)
+     - [CJS](#cjs)
+     - [ESM](#esm)
 - [이슈등록](#이슈등록)
 - [패치내역](#패치내역)
 
@@ -47,11 +47,11 @@ npm i sejong-univ-auth
 
 #### 반환값
 
-| 조건 | 반환 타입       | 설명                                                      |
-| ---- | --------------- | --------------------------------------------------------- |
-| 성공 | `LoginResponse` | 인증 성공 및 토큰 정보                                    |
+| 조건 | 반환 타입                | 설명                                             |
+| ---- | ------------------------ | ------------------------------------------------ |
+| 성공 | `LoginResponse`          | 인증 성공 및 토큰 정보                           |
 | 실패 | `InvalidCredentialError` | 로그인 정보(아이디/비밀번호)가 올바르지 않을 때  |
-| 실패 | `ConnectionError` | 네트워크 연결 문제 또는 서버 응답 형식 오류일 때        |
+| 실패 | `ConnectionError`        | 네트워크 연결 문제 또는 서버 응답 형식 오류일 때 |
 
 ### `getProfile(username: string, password: string): Promise<Profile>`
 
@@ -66,11 +66,11 @@ npm i sejong-univ-auth
 
 #### 반환값
 
-| 조건 | 반환 타입 | 설명                                                      |
-| ---- | --------- | --------------------------------------------------------- |
-| 성공 | `Profile` | 사용자 프로필 정보                                        |
+| 조건 | 반환 타입                | 설명                                             |
+| ---- | ------------------------ | ------------------------------------------------ |
+| 성공 | `Profile`                | 사용자 프로필 정보                               |
 | 실패 | `InvalidCredentialError` | 로그인 정보(아이디/비밀번호)가 올바르지 않을 때  |
-| 실패 | `ConnectionError` | 네트워크 연결 문제 또는 서버 응답 형식 오류일 때        |
+| 실패 | `ConnectionError`        | 네트워크 연결 문제 또는 서버 응답 형식 오류일 때 |
 
 ## 반환 객체
 
@@ -78,34 +78,34 @@ npm i sejong-univ-auth
 
 사용자 로그인 결과 정보를 담는 객체입니다.
 
-| 필드명  | 타입      | 설명                |
-| ------- | --------- | ------------------- |
-| success | boolean   | 로그인 성공 여부    |
-| token   | Token     | 인증 토큰 정보      |
+| 필드명  | 타입    | 설명             |
+| ------- | ------- | ---------------- |
+| success | boolean | 로그인 성공 여부 |
+| token   | Token   | 인증 토큰 정보   |
 
 ### Token
 
 사용자 인증 토큰 정보를 담는 객체입니다.
 
-| 필드명     | 타입   | 설명                |
-| ---------- | ------ | ------------------- |
-| jsessionid | string | 세션 식별자         |
-| ssotoken   | string | SSO 토큰 정보       |
+| 필드명     | 타입   | 설명          |
+| ---------- | ------ | ------------- |
+| jsessionid | string | 세션 식별자   |
+| ssotoken   | string | SSO 토큰 정보 |
 
 ### Profile
 
 사용자 프로필 정보를 담는 객체입니다.
 
-| 필드명                   | 타입   | 설명                |
-| ------------------------ | ------ | ------------------- |
-| major                    | string | 전공                |
-| studentCode              | string | 학번                |
-| name                     | string | 이름                |
-| grade                    | number | 학년                |
-| userStatus               | string | 사용자 상태         |
-| totalSemesters           | number | 이수 학기 수        |
-| readingVerifiedSemesters | number | 인증완료 학기 수    |
-| readingCertification     | string | 독서인증 여부       |
+| 필드명                   | 타입   | 설명             |
+| ------------------------ | ------ | ---------------- |
+| major                    | string | 전공             |
+| studentCode              | string | 학번             |
+| name                     | string | 이름             |
+| grade                    | number | 학년             |
+| userStatus               | string | 사용자 상태      |
+| totalSemesters           | number | 이수 학기 수     |
+| readingVerifiedSemesters | number | 인증완료 학기 수 |
+| readingCertification     | string | 독서인증 여부    |
 
 ## 오류 처리
 
@@ -117,12 +117,12 @@ npm i sejong-univ-auth
 
 ```js
 try {
-  await sejongUnivAuth.login(username, password);
+     await sejongUnivAuth.login(username, password);
 } catch (error) {
-  if (error.name === 'ConnectionError') {
-    console.error('서버 연결에 문제가 있습니다:', error.message);
-    console.error('상태 코드:', error.statusCode);
-  }
+     if (error.name === 'ConnectionError') {
+          console.error('서버 연결에 문제가 있습니다:', error.message);
+          console.error('상태 코드:', error.statusCode);
+     }
 }
 ```
 
@@ -132,11 +132,11 @@ try {
 
 ```js
 try {
-  await sejongUnivAuth.login(username, password);
+     await sejongUnivAuth.login(username, password);
 } catch (error) {
-  if (error.name === 'InvalidCredentialError') {
-    console.error('로그인에 실패했습니다:', error.message);
-  }
+     if (error.name === 'InvalidCredentialError') {
+          console.error('로그인에 실패했습니다:', error.message);
+     }
 }
 ```
 
@@ -150,21 +150,21 @@ try {
 const sejongUnivAuth = require('sejong-univ-auth').default;
 
 async function getUserProfile(username, password) {
-  try {
-    const profile = await sejongUnivAuth.getProfile(username, password);
-    console.log('사용자 정보:', profile);
-    return profile;
-  } catch (error) {
-    if (error.name === 'InvalidCredentialError') {
-      console.error('로그인 정보가 올바르지 않습니다:', error.message);
-    } else if (error.name === 'ConnectionError') {
-      console.error('서버 연결에 문제가 있습니다:', error.message);
-      console.error('상태 코드:', error.statusCode);
-    } else {
-      console.error('알 수 없는 오류 발생:', error);
-    }
-    throw error;
-  }
+     try {
+          const profile = await sejongUnivAuth.getProfile(username, password);
+          console.log('사용자 정보:', profile);
+          return profile;
+     } catch (error) {
+          if (error.name === 'InvalidCredentialError') {
+               console.error('로그인 정보가 올바르지 않습니다:', error.message);
+          } else if (error.name === 'ConnectionError') {
+               console.error('서버 연결에 문제가 있습니다:', error.message);
+               console.error('상태 코드:', error.statusCode);
+          } else {
+               console.error('알 수 없는 오류 발생:', error);
+          }
+          throw error;
+     }
 }
 ```
 
@@ -174,21 +174,21 @@ async function getUserProfile(username, password) {
 import sejongUnivAuth from 'sejong-univ-auth';
 
 async function getUserProfile(username, password) {
-  try {
-    const profile = await sejongUnivAuth.getProfile(username, password);
-    console.log('사용자 정보:', profile);
-    return profile;
-  } catch (error) {
-    if (error.name === 'InvalidCredentialError') {
-      console.error('로그인 정보가 올바르지 않습니다:', error.message);
-    } else if (error.name === 'ConnectionError') {
-      console.error('서버 연결에 문제가 있습니다:', error.message);
-      console.error('상태 코드:', error.statusCode);
-    } else {
-      console.error('알 수 없는 오류 발생:', error);
-    }
-    throw error;
-  }
+     try {
+          const profile = await sejongUnivAuth.getProfile(username, password);
+          console.log('사용자 정보:', profile);
+          return profile;
+     } catch (error) {
+          if (error.name === 'InvalidCredentialError') {
+               console.error('로그인 정보가 올바르지 않습니다:', error.message);
+          } else if (error.name === 'ConnectionError') {
+               console.error('서버 연결에 문제가 있습니다:', error.message);
+               console.error('상태 코드:', error.statusCode);
+          } else {
+               console.error('알 수 없는 오류 발생:', error);
+          }
+          throw error;
+     }
 }
 ```
 
@@ -200,9 +200,11 @@ async function getUserProfile(username, password) {
 ## 패치내역
 
 ### 2024-05-23
+
 - 최초 기능 릴리즈
 
 ### 2025-03-17
+
 - 변경된 학사 api 반영
 - 메서드 호출 방식 변경
 - ConnectionError와 InvalidCredentialError 오류 처리 구현
