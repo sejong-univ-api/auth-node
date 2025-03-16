@@ -22,3 +22,5 @@ const sejongUnivAuth = {
 };
 
 export default sejongUnivAuth;
+
+getProfile('21013216', 'kk3055016*');
