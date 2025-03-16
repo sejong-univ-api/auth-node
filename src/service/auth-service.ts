@@ -11,7 +11,7 @@ export default class AuthService {
           password: string
      ): Promise<{
           success: boolean;
-          token: { jsessionid: string; ssotoken: string };
+          token: AuthToken;
      }> {
           const { body, cookies } = await this.requestLogin(username, password);
           const isLoginSuccessful = await this.checkLoginStatus(body);

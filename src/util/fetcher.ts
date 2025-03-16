@@ -68,12 +68,32 @@ const _postRequest = async (
      return await _parseResponse(response);
 };
 
+const _getRequest = async (
+     url: string,
+     params: Record<string, string> = {},
+     headers: FetcherHeaders = {}
+): Promise<FetcherResponse> => {
+     const queryString = new URLSearchParams(params).toString();
+     const response = await fetch(`${url}?${queryString}`, {
+          method: 'GET',
+          headers,
+     });
+
+     if (!response.ok) {
+          throw new ConnectionError(response.statusText, response.status);
+     }
+
+     return await _parseResponse(response);
+};
+
 export type FetcherObject = Record<string, any>;
 export type FetcherText = string;
 
-export type FetcherPostOptions = {
-     formUrlEncoded?: boolean;
+export type FetcherOptions = {
      headers?: FetcherHeaders;
+};
+export type FetcherPostOptions = FetcherOptions & {
+     formUrlEncoded?: boolean;
 };
 export type FetcherHeaders = Record<string, string>;
 export type FetcherCookies = Record<string, string>;
@@ -90,15 +110,26 @@ export interface Fetcher {
           body: FetcherRequestBody,
           options?: FetcherPostOptions
      ): Promise<FetcherResponse>;
+
+     get(
+          url: string,
+          params?: Record<string, string>,
+          option?: FetcherOptions
+     ): Promise<FetcherResponse>;
 }
 
 const fetcher: Fetcher = Object.freeze({
-     post: (
+     post: async (
           url: string,
           body: FetcherRequestBody,
           options: FetcherPostOptions = {}
      ): Promise<FetcherResponse> =>
           _postRequest(url, body, options.formUrlEncoded ?? false, options.headers ?? {}),
+     get: async (
+          url: string,
+          params: Record<string, string> = {},
+          options: FetcherOptions = {}
+     ): Promise<FetcherResponse> => _getRequest(url, params, options.headers ?? {}),
 });
 
 export default fetcher;
