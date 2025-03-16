@@ -2,21 +2,21 @@
 
 # 목차
 
--   [소개](#소개)
--   [사용가능한 메서드](#사용가능한-메서드)
-    -   [getUserProfile](#getuserprofileloginrequestdto-loginrequestdto-promiseprofileresponsedto--null)
-    -   [getAuthenticatedJsessionId](#getauthenticatedjsessionidloginrequestdto-loginrequestdto-promisestring--null)
-    -   [isAuthenticatedUser](#isauthenticateduserloginrequestdto-loginrequestdto-promiseboolean)
-    -   [createLoginRequestDto](#createloginrequestdtouserid-string-password-string-loginrequestdto)
--   [DTO 객체](#dto-객체)
-    -   [LoginRequestDto](#loginrequestdto)
-    -   [ProfileResponseDto](#profileresponsedto)
--   [설치방법](#설치방법)
--   [사용예시](#사용예시)
-    -   [CJS](#cjs)
-    -   [ESM](#esm)
--   [이슈등록](#이슈등록)
-    -   [패치내역](#패치내역)
+- [소개](#소개)
+- [사용가능한 메서드](#사용가능한-메서드)
+  - [getUserProfile](#getuserprofileloginrequestdto-loginrequestdto-promiseprofileresponsedto--null)
+  - [getAuthenticatedJsessionId](#getauthenticatedjsessionidloginrequestdto-loginrequestdto-promisestring--null)
+  - [isAuthenticatedUser](#isauthenticateduserloginrequestdto-loginrequestdto-promiseboolean)
+  - [createLoginRequestDto](#createloginrequestdtouserid-string-password-string-loginrequestdto)
+- [DTO 객체](#dto-객체)
+  - [LoginRequestDto](#loginrequestdto)
+  - [ProfileResponseDto](#profileresponsedto)
+- [설치방법](#설치방법)
+- [사용예시](#사용예시)
+  - [CJS](#cjs)
+  - [ESM](#esm)
+- [이슈등록](#이슈등록)
+  - [패치내역](#패치내역)
 
 # 소개
 
@@ -34,7 +34,7 @@ SejongAuthDelegator는 세종대학교의 인증 시스템을 위해 개발된 �
 
 #### 인자
 
--   `loginRequestDto`: `LoginRequestDto` 객체
+- `loginRequestDto`: `LoginRequestDto` 객체
 
 #### 반환값
 
@@ -53,7 +53,7 @@ SejongAuthDelegator는 세종대학교의 인증 시스템을 위해 개발된 �
 
 #### 인자
 
--   `loginRequestDto`: `LoginRequestDto` 객체
+- `loginRequestDto`: `LoginRequestDto` 객체
 
 #### 반환값
 
@@ -72,7 +72,7 @@ SejongAuthDelegator는 세종대학교의 인증 시스템을 위해 개발된 �
 
 #### 인자
 
--   `loginRequestDto`: `LoginRequestDto` 객체
+- `loginRequestDto`: `LoginRequestDto` 객체
 
 #### 반환값
 
@@ -91,12 +91,12 @@ SejongAuthDelegator는 세종대학교의 인증 시스템을 위해 개발된 �
 
 #### 인자
 
--   `userId`: 사용자 ID
--   `password`: 사용자 비밀번호
+- `userId`: 사용자 ID
+- `password`: 사용자 비밀번호
 
 #### 반환값
 
--   `LoginRequestDto`: 생성된 `LoginRequestDto` 객체
+- `LoginRequestDto`: 생성된 `LoginRequestDto` 객체
 
 ---
 
@@ -142,27 +142,24 @@ npm i @coffee-tree/sejong-auth-delegator
 ### Then 방식
 
 ```js
-const {
-    sejongAuthDelegator,
-    LoginRequestDto,
-} = require("@coffee-tree/sejong-auth-delegator");
+const { sejongAuthDelegator, LoginRequestDto } = require('@coffee-tree/sejong-auth-delegator');
 
 const login = (userId, password) => {
-    const delegator = sejongAuthDelegator();
+  const delegator = sejongAuthDelegator();
 
-    const loginRequestDto = new LoginRequestDto(userId, password);
+  const loginRequestDto = new LoginRequestDto(userId, password);
 
-    const profile = delegator
-        .getUserProfile(loginRequestDto)
-        .then((userProfile) => {
-            return userProfile;
-        })
-        .catch((error) => {
-            console.error("Error fetching user profile", error);
-            throw error;
-        });
+  const profile = delegator
+    .getUserProfile(loginRequestDto)
+    .then((userProfile) => {
+      return userProfile;
+    })
+    .catch((error) => {
+      console.error('Error fetching user profile', error);
+      throw error;
+    });
 
-    return profile;
+  return profile;
 };
 ```
 
@@ -250,7 +247,7 @@ const login = (userId, password) => {
 
 ### 2024-05-23
 
--   로그인 성공 판단 기준을 변경하였습니다
--   TEST 검증 코드를 추가하였습니다.
--   `LoginRequestDTO` 클래스를 직접 반환받아 사용할 수 있게 하였습니다.
--   README 예시 코드를 변경하였습니다.
+- 로그인 성공 판단 기준을 변경하였습니다
+- TEST 검증 코드를 추가하였습니다.
+- `LoginRequestDTO` 클래스를 직접 반환받아 사용할 수 있게 하였습니다.
+- README 예시 코드를 변경하였습니다.
