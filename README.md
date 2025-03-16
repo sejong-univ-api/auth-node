@@ -4,19 +4,19 @@
 
 - [소개](#소개)
 - [사용가능한 메서드](#사용가능한-메서드)
-  - [getUserProfile](#getuserprofileloginrequestdto-loginrequestdto-promiseprofileresponsedto--null)
-  - [getAuthenticatedJsessionId](#getauthenticatedjsessionidloginrequestdto-loginrequestdto-promisestring--null)
-  - [isAuthenticatedUser](#isauthenticateduserloginrequestdto-loginrequestdto-promiseboolean)
-  - [createLoginRequestDto](#createloginrequestdtouserid-string-password-string-loginrequestdto)
+     - [getUserProfile](#getuserprofileloginrequestdto-loginrequestdto-promiseprofileresponsedto--null)
+     - [getAuthenticatedJsessionId](#getauthenticatedjsessionidloginrequestdto-loginrequestdto-promisestring--null)
+     - [isAuthenticatedUser](#isauthenticateduserloginrequestdto-loginrequestdto-promiseboolean)
+     - [createLoginRequestDto](#createloginrequestdtouserid-string-password-string-loginrequestdto)
 - [DTO 객체](#dto-객체)
-  - [LoginRequestDto](#loginrequestdto)
-  - [ProfileResponseDto](#profileresponsedto)
+     - [LoginRequestDto](#loginrequestdto)
+     - [ProfileResponseDto](#profileresponsedto)
 - [설치방법](#설치방법)
 - [사용예시](#사용예시)
-  - [CJS](#cjs)
-  - [ESM](#esm)
+     - [CJS](#cjs)
+     - [ESM](#esm)
 - [이슈등록](#이슈등록)
-  - [패치내역](#패치내역)
+     - [패치내역](#패치내역)
 
 # 소개
 
@@ -145,21 +145,21 @@ npm i @coffee-tree/sejong-auth-delegator
 const { sejongAuthDelegator, LoginRequestDto } = require('@coffee-tree/sejong-auth-delegator');
 
 const login = (userId, password) => {
-  const delegator = sejongAuthDelegator();
+     const delegator = sejongAuthDelegator();
 
-  const loginRequestDto = new LoginRequestDto(userId, password);
+     const loginRequestDto = new LoginRequestDto(userId, password);
 
-  const profile = delegator
-    .getUserProfile(loginRequestDto)
-    .then((userProfile) => {
-      return userProfile;
-    })
-    .catch((error) => {
-      console.error('Error fetching user profile', error);
-      throw error;
-    });
+     const profile = delegator
+          .getUserProfile(loginRequestDto)
+          .then((userProfile) => {
+               return userProfile;
+          })
+          .catch((error) => {
+               console.error('Error fetching user profile', error);
+               throw error;
+          });
 
-  return profile;
+     return profile;
 };
 ```
 
