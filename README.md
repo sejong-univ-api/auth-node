@@ -23,6 +23,7 @@
 ## 소개
 
 SejongUnivAuth는 세종대학교 통합인증 시스템을 위해 개발된 라이브러리입니다. 사용자의 ID와 패스워드를 이용해 세종대학교 시스템에 로그인하고, 인증된 세션을 통해 사용자의 프로필 정보를 가져올 수 있습니다.
+[sejong-auth-delegator](https://github.com/Jeong-Rae/sejong-auth-delegator)에서 이전되었습니다
 
 ## 설치방법
 
